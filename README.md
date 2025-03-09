@@ -73,3 +73,38 @@ Switch(config-vlan)# name Suporte_Técnico
 Switch(config)# vlan 30
 Switch(config-vlan)# name Servidores
 
+```
+
+### **Configuração de ACLs para bloquear HTTP e permitir HTTPS**
+```bash
+Router(config)# access-list 100 deny tcp any any eq 80
+Router(config)# access-list 100 permit tcp any any 
+Router(config)# interface GigabitEthernet0/0
+Router(config-if)# ip access-group 100 in
+```
+
+### **Configuração de Port Security**
+```bash
+Switch(config)# interface range fa0/2 - 12
+Switch(config-if-range)# switchport port-security
+Switch(config-if-range)# switchport port-security maximum 1
+Switch(config-if-range)# switchport port-security violation shutdown
+Switch(config-if-range)# switchport port-security mac-address sticky
+```
+### **Configuração de DHCP Snooping**
+```bash
+Switch(config)# ip dhcp snooping
+Switch(config)# ip dhcp snooping vlan 10,20
+Switch(config)# interface range fa0/2 - 24
+Switch(config-if-range)# ip dhcp snooping trust
+```
+### **Configuração de Dynamic ARP Inspection**
+```bash
+Switch(config)# ip arp inspection vlan 10,20
+Switch(config)# interface range fa0/2 - 24
+Switch(config-if-range)# ip arp inspection trust
+```
+## **Considerações Finais**
+Este projeto foi desenvolvido para proporcionar um laboratório de cybersecurity no Packet Tracer, permitindo aprender e aplicar segurança em redes de forma prática. Com a implementação de VLANs, ACLs, Port Security, DHCP Snooping e Dynamic ARP Inspection, a rede foi protegida contra ataques comuns, como MAC Spoofing, MITM e ARP Spoofing.
+
+A simulação de ataques e a utilização de ferramentas de monitoramento como o Packet Sniffer ajudam a validar a eficácia das medidas de segurança implementadas.
